@@ -411,17 +411,6 @@ export default function HeroSection({ onContactClick }: HeroSectionProps) {
               transition={{ type: 'tween', duration: 0.35 }}
               className="fixed inset-0 bg-[#0C0C0C]/98 backdrop-blur-xl z-[55] flex flex-col justify-center items-center overflow-hidden"
             >
-              {/* Close X button in overlay */}
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="absolute top-5 right-5 p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white active:scale-90 transition-all touch-manipulation"
-                style={{ WebkitTapHighlightColor: 'transparent' }}
-                aria-label="Close menu"
-              >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M2 2L16 16M16 2L2 16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-                </svg>
-              </button>
               <div className="flex flex-col gap-8 text-center items-center">
                 {[
                   { label: 'ABOUT', id: 'about' },

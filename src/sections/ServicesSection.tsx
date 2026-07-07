@@ -136,7 +136,7 @@ export default function ServicesSection({ onContactClick: _onContactClick }: { o
   return (
     <section
       id="services"
-      className="text-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative z-20 w-full overflow-hidden"
+      className="text-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-12 sm:py-20 md:py-32 relative z-20 w-full overflow-hidden"
       style={{ background: '#FFFFFF' }}
     >
       {/* Light Particle Environment */}

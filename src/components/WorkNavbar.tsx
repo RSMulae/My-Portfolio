@@ -19,12 +19,26 @@ export default function WorkNavbar({ onContactClick }: WorkNavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [isMenuOpen]);
+
   const handleNavigateToHomeSection = (id: string) => {
     window.history.pushState(null, '', import.meta.env.BASE_URL);
     window.dispatchEvent(new PopStateEvent('popstate'));
     setIsMenuOpen(false);
 
-    // Scroll to section after path updates
     setTimeout(() => {
       if (id === 'home') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -99,10 +113,11 @@ export default function WorkNavbar({ onContactClick }: WorkNavbarProps) {
               </FadeIn>
             </div>
 
-            {/* Mobile Hamburger Menu Toggle */}
+            {/* Mobile Hamburger — z-[210] so it stays above the overlay z-[200] */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex md:hidden flex-col justify-center items-center gap-1.5 w-8 h-8 bg-transparent border-none cursor-none z-[60] relative"
+              className={`flex md:hidden flex-col justify-center items-center gap-1.5 w-10 h-10 bg-transparent border-none relative touch-manipulation ${isMenuOpen ? 'z-[210]' : 'z-[60]'}`}
+              style={{ WebkitTapHighlightColor: 'transparent' }}
               aria-label="Toggle menu"
             >
               <span className={`w-6 h-0.5 bg-white transition-all duration-300 hamburger-line ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
@@ -111,57 +126,59 @@ export default function WorkNavbar({ onContactClick }: WorkNavbarProps) {
             </button>
           </div>
         </div>
+      </FadeIn>
 
-        {/* Mobile Fullscreen Overlay */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, x: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: '100%' }}
-              transition={{ type: 'tween', duration: 0.35 }}
-              className="fixed inset-0 bg-[#0C0C0C]/98 backdrop-blur-xl z-[55] flex flex-col justify-center items-center"
-            >
-              <div className="flex flex-col gap-8 text-center items-center">
-                {[
-                  { label: 'HOME', id: 'home' },
-                  { label: 'ABOUT', id: 'about' },
-                  { label: 'SERVICES', id: 'services' },
-                  { label: 'PROJECTS', id: 'projects' },
-                ].map((link, idx) => (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 + idx * 0.08 }}
-                  >
-                    <button
-                      onClick={() => handleNavigateToHomeSection(link.id)}
-                      className="text-2xl font-bold uppercase tracking-widest bg-transparent border-none cursor-none text-[#D7E2EA]/85 hover:text-white"
-                    >
-                      {link.label}
-                    </button>
-                  </motion.div>
-                ))}
+      {/* Mobile Fullscreen Overlay — outside nav to avoid stacking context clipping */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'tween', duration: 0.35 }}
+            className="fixed inset-0 bg-[#0C0C0C]/98 backdrop-blur-xl z-[200] flex flex-col justify-center items-center overflow-hidden"
+          >
+            <div className="flex flex-col gap-8 text-center items-center">
+              {[
+                { label: 'HOME', id: 'home' },
+                { label: 'ABOUT', id: 'about' },
+                { label: 'SERVICES', id: 'services' },
+                { label: 'PROJECTS', id: 'projects' },
+              ].map((link, idx) => (
                 <motion.div
+                  key={link.label}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + 4 * 0.08 }}
+                  transition={{ delay: 0.05 + idx * 0.08 }}
                 >
-                  <ContactButton
-                    label="CONTACT ME"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      onContactClick();
-                    }}
-                    className="!px-6 !py-2.5"
-                  />
+                  <button
+                    onClick={() => handleNavigateToHomeSection(link.id)}
+                    className="text-2xl font-bold uppercase tracking-widest bg-transparent border-none text-[#D7E2EA]/85 hover:text-white touch-manipulation"
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
+                  >
+                    {link.label}
+                  </button>
                 </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </FadeIn>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + 4 * 0.08 }}
+              >
+                <ContactButton
+                  label="CONTACT ME"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onContactClick();
+                  }}
+                  className="!px-6 !py-2.5"
+                />
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="h-20 sm:h-24 w-full bg-[#0C0C0C]" />
     </>
   );

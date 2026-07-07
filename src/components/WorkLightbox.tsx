@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import LazyImage from './LazyImage';
@@ -30,6 +31,21 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
 
   const finalMediaUrl = item ? getBaseMediaUrl(item.mediaUrl) : '';
 
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (item) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [item]);
+
   return (
     <AnimatePresence>
       {item && (
@@ -38,35 +54,36 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 overflow-y-auto"
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={onClose}
         >
+          {/* Close Button — rendered in the backdrop layer, above the card */}
+          <button
+            onClick={(e) => { e.stopPropagation(); onClose(); }}
+            className="absolute top-4 right-4 z-[110] flex items-center justify-center w-11 h-11 rounded-full bg-black/80 border border-white/20 text-white shadow-xl touch-manipulation"
+            style={{ WebkitTapHighlightColor: 'transparent' }}
+            aria-label="Close"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
           <motion.div
             initial={{ scale: 0.93, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.93, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative max-w-4xl w-full bg-[#121212] rounded-2xl border border-white/10 overflow-hidden shadow-2xl my-auto"
+            className="relative max-w-4xl w-full bg-[#121212] rounded-2xl border border-white/10 overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 z-10 p-2.5 rounded-full bg-black/70 hover:bg-black/90 text-white/90 hover:text-white transition-all border border-white/10 active:scale-95 touch-manipulation"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
-            >
-              <X className="w-5 h-5" />
-            </button>
-
             <div className="flex flex-col md:flex-row">
               {/* Media Section */}
-              <div className="flex-1 bg-black/40 flex items-center justify-center p-3 sm:p-4 min-h-[200px] sm:min-h-[280px] md:min-h-[400px] max-h-[45vw] sm:max-h-[50vh] md:max-h-[70vh] relative overflow-hidden">
+              <div className="flex-1 bg-black/40 flex items-center justify-center p-3 sm:p-4 min-h-[220px] sm:min-h-[280px] md:min-h-[400px] max-h-[55vh] md:max-h-[70vh] relative overflow-hidden">
                 {item.mediaType === 'video' ? (
                   <div className="relative w-full h-full flex items-center justify-center">
                     {item.mediaUrl.includes('youtube.com') || item.mediaUrl.includes('youtu.be') || item.mediaUrl.includes('vimeo.com') ? (
                       <iframe
                         src={finalMediaUrl}
-                        className="w-full aspect-video max-h-[45vh] md:max-h-[65vh] rounded-lg border-0 shadow-lg relative z-0"
+                        className="w-full aspect-video max-h-[50vh] md:max-h-[65vh] rounded-lg border-0 shadow-lg relative z-0"
                         allow="autoplay; fullscreen; picture-in-picture"
                         allowFullScreen
                         title={item.title}
@@ -78,11 +95,11 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
                         autoPlay
                         loop
                         playsInline
-                        className="max-h-[45vh] md:max-h-[65vh] w-full h-full object-contain rounded-lg relative z-0"
+                        className="max-h-[50vh] md:max-h-[65vh] w-full h-full object-contain rounded-lg relative z-0"
                       />
                     )}
                     {/* Repeating Diagonal Watermark Overlay for Videos */}
-                    <div 
+                    <div
                       className="absolute inset-0 z-10 select-none pointer-events-none opacity-60 rounded-lg"
                       style={{
                         backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPScyMDAnIGhlaWdodD0nMjAwJyB2aWV3Qm94PScwIDAgMjAwIDIwMCc+PHRleHQgeD0nMTAwJyB5PScxMDAnIGZpbGw9J3JnYmEoMjU1LCAyNTUsIDI1NSwgMC4wOCknIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0nMTEnIGZvbnQtd2VpZ2h0PSdib2xkJyB0cmFuc2Zvcm09J3JvdGF0ZSgtMzAgMTAwIDEwMCknIHRleHQtYW5jaG9yPSdtaWRkbGUiPkdVUlUgTkFOQUsgRU5URVJQUklTRVM8L3RleHQ+PHRleHQgeD0nMTAwJyB5PScxMjAnIGZpbGw9J3JnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSknIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0nOScgZm9udC13ZWlnaHQ9J2JvbGQnIHRyYW5zZm9ybT0icm90YXRlKC0zMCAxMDAgMTAwKScgdGV4dC1hbmNob3I9Im1pZGRsZSI+U0FNUExFIC0gRE8gTk9UIFJFVVNFPC90ZXh0Pjwvc3ZnPg==')",
@@ -94,7 +111,7 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
                   <LazyImage
                     src={item.mediaUrl || item.thumbnail}
                     alt={item.title}
-                    className="max-h-[45vh] md:max-h-[65vh] w-full h-full rounded-lg"
+                    className="max-h-[50vh] md:max-h-[65vh] w-full h-full rounded-lg"
                     fit="contain"
                   />
                 )}

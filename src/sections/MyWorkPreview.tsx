@@ -16,7 +16,7 @@ export default function MyWorkPreview() {
   };
 
   return (
-    <section id="my-work-preview" className="bg-[#0C0C0C] py-20 sm:py-24 px-5 sm:px-8 md:px-10 relative z-20 border-t border-white/5 overflow-hidden">
+    <section id="my-work-preview" className="bg-[#0C0C0C] py-12 sm:py-16 md:py-20 px-5 sm:px-8 md:px-10 relative z-20 border-t border-white/5 overflow-hidden">
       <InteractiveBackground theme="dark" />
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Heading */}

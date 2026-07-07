@@ -54,7 +54,7 @@ export default function MarqueeSection() {
     <div
       ref={sectionRef}
       id="marqueeContainer"
-      className="pt-24 sm:pt-32 md:pt-40 pb-10 w-full overflow-hidden relative z-[1]"
+      className="pt-10 sm:pt-20 md:pt-40 pb-6 sm:pb-10 w-full overflow-hidden relative z-[1]"
       style={{ background: '#0C0C0C' }}
     >
       <InteractiveBackground theme="dark" />
