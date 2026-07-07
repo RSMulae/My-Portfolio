@@ -32,6 +32,21 @@ export default function HeroSection({ onContactClick }: HeroSectionProps) {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [isMenuOpen]);
+
   useEffect(() => {
     // Wait for the fade-in animation to complete (1.2s total delay)
     const startTimeout = setTimeout(() => {
@@ -394,8 +409,19 @@ export default function HeroSection({ onContactClick }: HeroSectionProps) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ type: 'tween', duration: 0.35 }}
-              className="fixed inset-0 bg-[#0C0C0C]/98 backdrop-blur-xl z-[55] flex flex-col justify-center items-center"
+              className="fixed inset-0 bg-[#0C0C0C]/98 backdrop-blur-xl z-[55] flex flex-col justify-center items-center overflow-hidden"
             >
+              {/* Close X button in overlay */}
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="absolute top-5 right-5 p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white active:scale-90 transition-all touch-manipulation"
+                style={{ WebkitTapHighlightColor: 'transparent' }}
+                aria-label="Close menu"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M2 2L16 16M16 2L2 16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                </svg>
+              </button>
               <div className="flex flex-col gap-8 text-center items-center">
                 {[
                   { label: 'ABOUT', id: 'about' },

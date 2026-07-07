@@ -38,7 +38,7 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 overflow-y-auto"
           onClick={onClose}
         >
           <motion.div
@@ -46,20 +46,21 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.93, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative max-w-4xl w-full bg-[#121212] rounded-2xl border border-white/10 overflow-hidden shadow-2xl"
+            className="relative max-w-4xl w-full bg-[#121212] rounded-2xl border border-white/10 overflow-hidden shadow-2xl my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white transition-all cursor-none border border-white/5 active:scale-95"
+              className="absolute top-3 right-3 z-10 p-2.5 rounded-full bg-black/70 hover:bg-black/90 text-white/90 hover:text-white transition-all border border-white/10 active:scale-95 touch-manipulation"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="flex flex-col md:flex-row h-full">
+            <div className="flex flex-col md:flex-row">
               {/* Media Section */}
-              <div className="flex-1 bg-black/40 flex items-center justify-center p-4 min-h-[250px] md:min-h-[400px] max-h-[50vh] md:max-h-[70vh] relative overflow-hidden">
+              <div className="flex-1 bg-black/40 flex items-center justify-center p-3 sm:p-4 min-h-[200px] sm:min-h-[280px] md:min-h-[400px] max-h-[45vw] sm:max-h-[50vh] md:max-h-[70vh] relative overflow-hidden">
                 {item.mediaType === 'video' ? (
                   <div className="relative w-full h-full flex items-center justify-center">
                     {item.mediaUrl.includes('youtube.com') || item.mediaUrl.includes('youtu.be') || item.mediaUrl.includes('vimeo.com') ? (
@@ -100,7 +101,7 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
               </div>
 
               {/* Info Section */}
-              <div className="p-6 md:p-8 md:w-80 bg-[#161616] border-t md:border-t-0 md:border-l border-white/5 flex flex-col justify-between">
+              <div className="p-4 sm:p-6 md:p-8 md:w-80 bg-[#161616] border-t md:border-t-0 md:border-l border-white/5 flex flex-col justify-between">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-[#B600A8] font-bold font-mono">
                     {item.category}

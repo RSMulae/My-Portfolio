@@ -35,8 +35,8 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
   return (
     <section
       id="about"
-      className="relative min-h-screen w-full flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-24 text-center overflow-hidden z-[1]"
-      style={{ background: '#0C0C0C' }}
+      className="relative min-h-screen w-full flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-24 text-center z-[1]"
+      style={{ background: '#0C0C0C', overflow: 'clip' }}
     >
       <InteractiveBackground theme="dark" />
       {/* Corner floating 3D objects */}
@@ -51,16 +51,16 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
         {/* Top-left: Moon icon */}
         <FadeIn
           delay={0.1}
-          x={-80}
+          x={-20}
           y={0}
           duration={0.9}
-          className="absolute top-[5%] left-[1%] sm:left-[2%] md:left-[4%] select-none pointer-events-none deco-3d"
+          className="absolute top-[4%] left-[0%] sm:left-[2%] md:left-[4%] select-none pointer-events-none deco-3d"
         >
           <div className="moon-float">
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
               alt="moon"
-              className="w-[100px] sm:w-[150px] md:w-[210px] h-auto object-contain"
+              className="w-[70px] sm:w-[130px] md:w-[210px] h-auto object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -69,16 +69,16 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
         {/* Bottom-left: 3D object */}
         <FadeIn
           delay={0.25}
-          x={-80}
+          x={-20}
           y={0}
           duration={0.9}
-          className="absolute top-[48%] left-[2%] sm:left-[6%] md:left-[10%] select-none pointer-events-none deco-3d"
+          className="absolute top-[50%] left-[0%] sm:left-[4%] md:left-[10%] select-none pointer-events-none deco-3d"
         >
           <div className="wireframe-float">
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
               alt="wire"
-              className="w-[80px] sm:w-[120px] md:w-[180px] h-auto object-contain"
+              className="w-[55px] sm:w-[100px] md:w-[180px] h-auto object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -87,16 +87,16 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
         {/* Top-right: Lego icon */}
         <FadeIn
           delay={0.15}
-          x={80}
+          x={20}
           y={0}
           duration={0.9}
-          className="absolute top-[12%] right-[1%] sm:right-[2%] md:right-[4%] select-none pointer-events-none deco-3d"
+          className="absolute top-[10%] right-[0%] sm:right-[2%] md:right-[4%] select-none pointer-events-none deco-3d"
         >
           <div className="lego-float">
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
               alt="lego"
-              className="w-[100px] sm:w-[150px] md:w-[210px] h-auto object-contain"
+              className="w-[70px] sm:w-[130px] md:w-[210px] h-auto object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -105,16 +105,16 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
         {/* Bottom-right: 3D group */}
         <FadeIn
           delay={0.3}
-          x={80}
+          x={20}
           y={0}
           duration={0.9}
-          className="absolute bottom-[10%] right-[2%] sm:right-[6%] md:right-[10%] select-none pointer-events-none deco-3d"
+          className="absolute bottom-[8%] right-[0%] sm:right-[4%] md:right-[10%] select-none pointer-events-none deco-3d"
         >
           <div className="ring-float">
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
               alt="ring"
-              className="w-[110px] sm:w-[150px] md:w-[220px] h-auto object-contain"
+              className="w-[75px] sm:w-[130px] md:w-[220px] h-auto object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -130,7 +130,7 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
             style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
           />
 
-          <div className="h-10 sm:h-14 md:h-16 w-full" />
+          <div className="h-6 sm:h-10 md:h-16 w-full" />
 
           <div className="w-full max-w-[560px] mx-auto text-left sm:text-center">
             <AnimatedText
@@ -141,7 +141,7 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
           </div>
 
           {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-3xl mx-auto mt-14 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-3xl mx-auto mt-8 sm:mt-12 md:mt-14 mb-6 sm:mb-8 md:mb-10">
             {stats.map((stat, i) => (
               <div
                 key={i}
@@ -180,7 +180,7 @@ export default function AboutSection({ onContactClick }: AboutSectionProps) {
             ))}
           </div>
 
-          <div className="h-6 sm:h-8 md:h-10 w-full" />
+          <div className="h-4 sm:h-6 md:h-10 w-full" />
 
           <FadeIn delay={0.2} y={30}>
             <ContactButton label="Let's build together" onClick={onContactClick} />

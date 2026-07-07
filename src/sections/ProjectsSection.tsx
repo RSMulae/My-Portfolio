@@ -69,8 +69,8 @@ export default function ProjectsSection() {
           background: 'radial-gradient(circle, rgba(99, 102, 241, 0.07) 0%, transparent 70%)',
         }}
       />
-      <div className="global-container px-5 sm:px-8 md:px-10 pt-24 sm:pt-28 md:pt-32 relative z-10">
-        <div className="overflow-hidden mb-12 sm:mb-16 md:mb-20 text-center">
+      <div className="global-container px-5 sm:px-8 md:px-10 pt-16 sm:pt-24 md:pt-32 relative z-10">
+        <div className="overflow-hidden mb-8 sm:mb-12 md:mb-20 text-center">
           <ScrollRevealHeading
             text="Project"
             className="hero-heading font-black uppercase leading-none tracking-[0.08em] text-center"
@@ -78,7 +78,7 @@ export default function ProjectsSection() {
           />
         </div>
 
-          <div id="projectsStack" className="space-y-[30vh] sm:space-y-[40vh] md:space-y-[45vh] max-w-5xl mx-auto pb-10">
+          <div id="projectsStack" className="space-y-[20vh] sm:space-y-[32vh] md:space-y-[45vh] max-w-5xl mx-auto pb-10">
             {projects.map((proj, idx) => (
               <ProjectCard key={proj.num} project={proj} index={idx} total={projects.length} />
             ))}
