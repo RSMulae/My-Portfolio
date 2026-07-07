@@ -1,0 +1,4 @@
+Put your compressed portfolio videos here.
+Supported formats: .mp4, .webm.
+Keep file sizes small (< 20MB is recommended for static hosts).
+Refer to them in src/data/workData.ts like: "/portfolio/videos/your-file-name.mp4"
