@@ -1,0 +1,3 @@
+Put your local portfolio images here.
+Supported formats: .webp, .jpg, .png, .svg.
+Refer to them in src/data/workData.ts like: "/portfolio/images/your-file-name.webp"
