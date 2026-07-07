@@ -17,7 +17,7 @@ export default function NotFound() {
   }, []);
 
   const handleBackHome = () => {
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', import.meta.env.BASE_URL);
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 

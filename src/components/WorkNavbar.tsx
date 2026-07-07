@@ -20,7 +20,7 @@ export default function WorkNavbar({ onContactClick }: WorkNavbarProps) {
   }, []);
 
   const handleNavigateToHomeSection = (id: string) => {
-    window.history.pushState(null, '', '/');
+    window.history.pushState(null, '', import.meta.env.BASE_URL);
     window.dispatchEvent(new PopStateEvent('popstate'));
     setIsMenuOpen(false);
 

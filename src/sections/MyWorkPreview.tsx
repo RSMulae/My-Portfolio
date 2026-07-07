@@ -10,7 +10,7 @@ export default function MyWorkPreview() {
   const [selectedItem, setSelectedItem] = useState<WorkItem | null>(null);
 
   const handleNavigateToWork = () => {
-    window.history.pushState(null, '', '/work');
+    window.history.pushState(null, '', `${import.meta.env.BASE_URL}work`);
     window.dispatchEvent(new PopStateEvent('popstate'));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

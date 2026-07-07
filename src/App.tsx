@@ -48,13 +48,26 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Normalize pathname based on Vite base URL
+  const getRelativePath = (path: string) => {
+    const base = import.meta.env.BASE_URL; // '/My-Portfolio/' or '/'
+    if (base === '/') return path;
+    if (path.startsWith(base)) {
+      const relative = path.slice(base.length);
+      return relative.startsWith('/') ? relative : '/' + relative;
+    }
+    return path;
+  };
+
+  const relativePath = getRelativePath(currentPath);
+
   // Simple client-side subpath routing
-  if (currentPath !== '/' && currentPath !== '/index.html' && currentPath !== '/home' && currentPath !== '/work') {
+  if (relativePath !== '/' && relativePath !== '/index.html' && relativePath !== '/home' && relativePath !== '/work') {
     return <NotFound />;
   }
 
   // Work Subpage Router Render
-  if (currentPath === '/work') {
+  if (relativePath === '/work') {
     return (
       <div className="main-wrapper bg-[#0C0C0C] min-h-screen text-[#D7E2EA] font-kanit">
         <CustomCursor />

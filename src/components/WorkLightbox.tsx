@@ -19,6 +19,17 @@ interface WorkLightboxProps {
 }
 
 export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
+  const getBaseMediaUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+      return url;
+    }
+    const normalized = url.startsWith('/') ? url.slice(1) : url;
+    return `${import.meta.env.BASE_URL}${normalized}`;
+  };
+
+  const finalMediaUrl = item ? getBaseMediaUrl(item.mediaUrl) : '';
+
   return (
     <AnimatePresence>
       {item && (
@@ -53,7 +64,7 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
                   <div className="relative w-full h-full flex items-center justify-center">
                     {item.mediaUrl.includes('youtube.com') || item.mediaUrl.includes('youtu.be') || item.mediaUrl.includes('vimeo.com') ? (
                       <iframe
-                        src={item.mediaUrl}
+                        src={finalMediaUrl}
                         className="w-full aspect-video max-h-[45vh] md:max-h-[65vh] rounded-lg border-0 shadow-lg relative z-0"
                         allow="autoplay; fullscreen; picture-in-picture"
                         allowFullScreen
@@ -61,7 +72,7 @@ export default function WorkLightbox({ item, onClose }: WorkLightboxProps) {
                       />
                     ) : (
                       <video
-                        src={item.mediaUrl}
+                        src={finalMediaUrl}
                         controls
                         autoPlay
                         loop

@@ -350,7 +350,7 @@ export default function HeroSection({ onContactClick }: HeroSectionProps) {
                   <button
                     onClick={() => {
                       if (link.isPage) {
-                        window.history.pushState(null, '', '/work');
+                        window.history.pushState(null, '', `${import.meta.env.BASE_URL}work`);
                         window.dispatchEvent(new PopStateEvent('popstate'));
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       } else {
@@ -413,7 +413,7 @@ export default function HeroSection({ onContactClick }: HeroSectionProps) {
                       onClick={() => {
                         setIsMenuOpen(false);
                         if (link.isPage) {
-                          window.history.pushState(null, '', '/work');
+                          window.history.pushState(null, '', `${import.meta.env.BASE_URL}work`);
                           window.dispatchEvent(new PopStateEvent('popstate'));
                           window.scrollTo({ top: 0, behavior: 'smooth' });
                         } else {
@@ -581,7 +581,7 @@ export default function HeroSection({ onContactClick }: HeroSectionProps) {
                 <div className="absolute inset-x-0 bottom-0 top-0 overflow-hidden rounded-b-[32px] z-10 pointer-events-none">
                   {/* Avatar image with rounded transparent corners */}
                   <img
-                    src="/raj-portrait.png"
+                    src={`${import.meta.env.BASE_URL}raj-portrait.png`}
                     alt="Portrait Raj"
                     className="absolute bottom-0 left-0 w-full h-auto object-contain select-none pointer-events-auto rounded-b-[32px] transition-transform duration-400 group-hover:scale-104 cursor-none relative z-10"
                     style={{

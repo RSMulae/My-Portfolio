@@ -8,8 +8,10 @@ interface FooterProps {
 
 export default function Footer({ onContactClick }: FooterProps) {
   const handleScrollTo = (id: string) => {
-    if (window.location.pathname === '/work') {
-      window.history.pushState(null, '', '/');
+    const base = import.meta.env.BASE_URL;
+    const isWorkPath = window.location.pathname.endsWith('/work') || window.location.pathname.endsWith('/work/');
+    if (isWorkPath) {
+      window.history.pushState(null, '', base);
       window.dispatchEvent(new PopStateEvent('popstate'));
       
       setTimeout(() => {

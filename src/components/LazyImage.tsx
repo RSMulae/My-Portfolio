@@ -11,13 +11,25 @@ interface LazyImageProps {
 export default function LazyImage({ src, alt, className = '', style, fit = 'cover' }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Resolve base URL for local assets
+  const getBaseSrc = (srcPath: string) => {
+    if (!srcPath) return '';
+    if (srcPath.startsWith('http://') || srcPath.startsWith('https://') || srcPath.startsWith('data:')) {
+      return srcPath;
+    }
+    const normalized = srcPath.startsWith('/') ? srcPath.slice(1) : srcPath;
+    return `${import.meta.env.BASE_URL}${normalized}`;
+  };
+
+  const finalSrc = getBaseSrc(src);
+
   useEffect(() => {
     const img = new Image();
-    img.src = src;
+    img.src = finalSrc;
     img.onload = () => {
       setIsLoaded(true);
     };
-  }, [src]);
+  }, [finalSrc]);
 
   // A very small, low-res base64 purple/grey gradient placeholder
   const placeholder = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23121212'/><rect width='100' height='100' fill='url(%23g)' opacity='0.2'/><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23B600A8'/><stop offset='100%25' stop-color='%237621B0'/></linearGradient></defs></svg>";
@@ -40,7 +52,7 @@ export default function LazyImage({ src, alt, className = '', style, fit = 'cove
       />
       {/* High-res image */}
       <img
-        src={src}
+        src={finalSrc}
         alt={alt}
         loading="lazy"
         className={`w-full h-full ${fitClass} transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'} select-none pointer-events-none`}
